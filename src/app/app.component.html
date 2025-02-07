@@ -1,71 +1,15 @@
-<main class="main">
-  <div class="content">
-    <div class="left-side">
-      <app-header [text]="title" />
-    </div>
-
-    <div class="divider" role="separator" aria-label="Divider"></div>
-
-    <div class="list">
-        @for (item of movies.value(); track item.title) {
-          <a
-            class="pill"
-            target="_blank"
-            rel="noopener"
-          >
-            <div class="title">{{ item.title }}</div>
-            <div class="">({{ item.release_date?.split?.('-')?.[0] }})</div>
-            <div class="rating">{{ item.vote_average }}</div>
-          </a>
-        }
-    </div>
+<main class='flex flex-col whitespace-nowrap mx-auto text-center gap-y-4'>
+  <div>
+    <app-header [text]="title" />
   </div>
+
+  <div
+    class="divider h-0.75 bg-sky-300"
+    role="separator"
+    aria-label="Divider"
+  ></div>
+
+  <app-movies-list />
 </main>
-
-<style>
-  .content {
-    display: flex;
-    flex-direction: column;
-    white-space: nowrap;
-    margin-inside: auto;
-    text-align: center;
-    row-gap: 1rem;
-  }
-  .list {
-    display: flex;
-    flex-direction: column;
-    row-gap: 0.25rem;
-  }
-
-  .divider {
-    height: 0.2rem;
-    background-color: #64a9b3;
-    opacity: 0.5;
-  }
-
-  .pill {
-    display: flex;
-    margin-inline: auto;
-    width: fit-content;
-    border: #adffb7 medium solid;
-    border-radius: 0.75rem;
-    background-color: #adffb799;
-    column-gap: 0.2rem;
-  }
-
-  .title {
-    padding-left: 0.2rem;
-  }
-
-  .rating {
-    border-radius: 0.75rem;
-    background-color: #61d361;
-    padding-inline: 0.2rem;
-    /*color: #64a9b3;*/
-    opacity: 0.8;
-    padding-left: 0.25rem;
-    font-weight: bold;
-  }
-</style>
 
 <router-outlet />

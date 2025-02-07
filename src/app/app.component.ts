@@ -1,25 +1,14 @@
-import {Component, resource } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from '@components/header/header.component';
-import { MovieDb } from 'moviedb-promise';
-import { ApiService } from '@services/api.service';
+import { HeaderComponent } from '../shared/header.component';
+import { MoviesListComponent } from '@/movies/movies-list/movies-list.component';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet, HeaderComponent, MoviesListComponent],
   templateUrl: './app.component.html',
-  providers: [ApiService],
 })
 export class AppComponent {
   title = 'Movie DB';
-  tmdbApi: MovieDb;
-
-  constructor(private apiService: ApiService) {
-    this.tmdbApi = new MovieDb(this.apiService.getApiKey());
-  }
-
-  movies = resource({
-    loader: async () => (await this.tmdbApi.moviePopular()).results,
-  })
-  protected readonly Date = Date;
 }
