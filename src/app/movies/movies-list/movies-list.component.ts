@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MoviesApiService } from '@/movies/movies-api.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-movies-list',
-  imports: [DatePipe],
+  imports: [DatePipe, DecimalPipe],
   templateUrl: './movies-list.component.html',
 })
 export class MoviesListComponent {

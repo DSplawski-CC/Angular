@@ -24,7 +24,7 @@
       >
         <div class="w-fit pl-0.5">{{ item.title }}</div>
         <div class="w-fit">({{ item.release_date | date:'YYYY' }})</div>
-        <div class="w-fit bg-green-300 rounded-2xl pl-0.5 opacity-70 font-bold">{{ item.vote_average }}</div>
+        <div class="w-fit bg-green-300 rounded-2xl pl-0.5 opacity-70 font-bold">{{ item.vote_average | number:'1.0-1' }}</div>
       </a>
     }
   </div>
