@@ -2,7 +2,7 @@
   <div class="flex mx-auto gap-1.5">
     <button
       class="cursor-pointer font-bold border-2 rounded-md px-1 border-green-400 bg-green-200"
-      (click)="moviesApiService.previousPage()"
+      (click)="previousPage()"
     >
       Previous
     </button>
@@ -11,7 +11,7 @@
     </div>
     <button
       class="cursor-pointer font-bold border-2 rounded-md px-1 border-green-400 bg-green-200"
-      (click)="moviesApiService.nextPage()"
+      (click)="nextPage()"
     >
       Next
     </button>
@@ -23,7 +23,7 @@
         class="cursor-pointer flex mx-auto gap-x-1 w-fit bg-green-100 border-green-300 border-2 rounded-2xl"
       >
         <div class="w-fit pl-0.5">{{ item.title }}</div>
-        <div class="w-fit">({{ item.release_date?.split?.('-')?.[0] }})</div>
+        <div class="w-fit">({{ item.release_date | date:'YYYY' }})</div>
         <div class="w-fit bg-green-300 rounded-2xl pl-0.5 opacity-70 font-bold">{{ item.vote_average }}</div>
       </a>
     }

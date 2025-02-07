@@ -1,17 +1,13 @@
 import { Component } from '@angular/core';
-import { MovieResult } from 'moviedb-promise';
 import { MoviesApiService } from '@/movies/movies-api.service';
-import { HoverDirective } from '../../../shared/hover.directive';
-import { NgClass } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-movies-list',
-  imports: [HoverDirective, NgClass],
+  imports: [DatePipe],
   templateUrl: './movies-list.component.html',
 })
 export class MoviesListComponent {
-  hoveredMovie?: MovieResult;
-
   constructor(public moviesApiService: MoviesApiService) {}
 
   previousPage(): void {
