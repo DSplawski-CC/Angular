@@ -13,6 +13,29 @@ export class MoviesApiService {
   }
 
   private currentPage = signal(1);
+  private _movieId = signal<string | undefined>(undefined);
+
+  get movieId(): string | undefined {
+    return this._movieId.asReadonly()();
+  }
+  set movieId(value: string | undefined) {
+    this._movieId.set(value);
+  }
+
+  movie = resource({
+    request: () => ({id: this._movieId()}),
+    loader: async ({request}) => {
+      if (!request.id) {
+        return undefined;
+      }
+
+      return (await this.tmdbApi.movieInfo(
+        {
+          id: request.id,
+        }
+      ))
+    }
+  });
 
   moviesPopular = resource({
     request: () => ({page: this.currentPage()}),

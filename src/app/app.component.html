@@ -3,13 +3,26 @@
     <app-header [text]="title" />
   </div>
 
+  <nav>
+    <a
+      class="cursor-pointer font-bold text-blue-500"
+      routerLink="/movies"
+      routerLinkActive="underline font-extrabold"
+    >Movies</a> |
+    <a
+      class="cursor-pointer font-bold text-blue-500"
+      routerLink="/heroes-list"
+      routerLinkActive="underline font-extrabold"
+    >Heroes</a>
+  </nav>
+
   <div
     class="divider h-0.75 bg-sky-300"
     role="separator"
     aria-label="Divider"
   ></div>
 
-  <app-movies-list />
+  <router-outlet />
 </main>
 
-<router-outlet />
+
