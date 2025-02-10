@@ -2,6 +2,7 @@ import { Injectable, resource, signal } from '@angular/core';
 import { ApiService } from '@core/api.service';
 import { MovieDb } from 'moviedb-promise';
 
+
 @Injectable({
   providedIn: 'root',
 })
