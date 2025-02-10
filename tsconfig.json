@@ -6,8 +6,8 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["app/*"],
-      "@components/*": ["app/components/*"],
-      "@services/*": ["app/services/*"],
+      "@shared/*": ["shared/*"],
+      "@core/*": ["core/*"],
     },
     "outDir": "./dist/out-tsc",
     "strict": true,
