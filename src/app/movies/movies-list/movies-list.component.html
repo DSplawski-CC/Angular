@@ -20,6 +20,7 @@
   <div class="flex flex-col gap-y-1">
     @for (item of moviesApiService.moviesPopular.value(); track item.title) {
       <a
+        [routerLink]="['/movie/', item.id]"
         class="cursor-pointer flex mx-auto gap-x-1 w-fit bg-green-100 border-green-300 border-2 rounded-2xl"
       >
         <div class="w-fit pl-0.5">{{ item.title }}</div>
