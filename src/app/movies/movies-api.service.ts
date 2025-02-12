@@ -14,12 +14,12 @@ export class MoviesApiService {
   }
 
   private currentPage = signal(1);
-  private _movieId = signal<string | null>(null);
+  private _movieId = signal<Maybe<string>>(undefined);
 
-  get movieId(): string | null {
+  get movieId() {
     return this._movieId.asReadonly()();
   }
-  set movieId(value: string | null) {
+  set movieId(value: Maybe<string>) {
     this._movieId.set(value);
   }
 
