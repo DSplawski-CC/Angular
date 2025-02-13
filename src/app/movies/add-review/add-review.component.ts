@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ReviewData } from '@/movies/types';
+import { FormInputComponent } from '@shared/components/form-input/form-input.component';
 
 
 type DataForm<T extends Object> = {
@@ -9,7 +10,7 @@ type DataForm<T extends Object> = {
 
 @Component({
   selector: 'app-add-review',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormInputComponent],
   templateUrl: './add-review.component.html',
 })
 export class AddReviewComponent {

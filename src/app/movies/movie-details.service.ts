@@ -25,7 +25,6 @@ export class MovieDetailsService {
   movie = resource({
     request: () => ({id: this._movieId()}),
     loader: async ({request}) => {
-      console.log(request)
       if (!request.id) {
         return undefined;
       }

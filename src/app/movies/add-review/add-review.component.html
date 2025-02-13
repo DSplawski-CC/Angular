@@ -8,38 +8,31 @@
   <div
     class="grid grid-cols-[max-content_1fr] gap-y-6 gap-x-4 items-center"
   >
-    <label for="rating" class="text-right">Rate:</label>
-    <div class="flex flex-col relative">
-      <input
-        id="rating"
-        type="number"
-        formControlName="rating"
-        class="border-b border-gray-300 focus:outline-none"
-      />
-      @if (reviewForm.controls.rating.dirty && reviewForm.controls.rating.errors) {
-        <span class="text-red-400 text-xs absolute top-7">
-          Field is invalid!
-        </span>
-      }
-    </div>
+    <app-form-input
+      class="contents"
+      label="rating"
+      type="number"
+      formControlName="rating"
+      [showError]="reviewForm.controls.rating.invalid && reviewForm.controls.rating.touched"
+    />
 
-    <label for="author" class="text-right">Name:</label>
-    <input
-      id="author"
+    <app-form-input
+      class="contents"
+      label="name"
       type="text"
       formControlName="author"
-      class="border-b border-gray-300 focus:outline-none"
+      [showError]="reviewForm.controls.author.invalid && reviewForm.controls.author.touched"
     />
 
-    <label for="title" class="text-right">Title:</label>
-    <input
-      id="title"
+    <app-form-input
+      class="contents"
+      label="title"
       type="text"
       formControlName="title"
-      class="border-b border-gray-300 focus:outline-none"
+      [showError]="reviewForm.controls.title.invalid && reviewForm.controls.title.touched"
     />
 
-    <label for="content" class="text-right">Description:</label>
+    <label for="content" class="text-right">description:</label>
     <textarea
       id="content"
       formControlName="content"
