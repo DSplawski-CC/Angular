@@ -1,0 +1,59 @@
+<p class="text-2xl">Add your review</p>
+
+<form
+  class="flex flex-col gap-y-4"
+  [formGroup]="reviewForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div
+    class="grid grid-cols-[max-content_1fr] gap-y-6 gap-x-4 items-center"
+  >
+    <label for="rating" class="text-right">Rate:</label>
+    <div class="flex flex-col relative">
+      <input
+        id="rating"
+        type="number"
+        formControlName="rating"
+        class="border-b border-gray-300 focus:outline-none"
+      />
+      @if (reviewForm.controls.rating.dirty && reviewForm.controls.rating.errors) {
+        <span class="text-red-400 text-xs absolute top-7">
+          Field is invalid!
+        </span>
+      }
+    </div>
+
+    <label for="author" class="text-right">Name:</label>
+    <input
+      id="author"
+      type="text"
+      formControlName="author"
+      class="border-b border-gray-300 focus:outline-none"
+    />
+
+    <label for="title" class="text-right">Title:</label>
+    <input
+      id="title"
+      type="text"
+      formControlName="title"
+      class="border-b border-gray-300 focus:outline-none"
+    />
+
+    <label for="content" class="text-right">Description:</label>
+    <textarea
+      id="content"
+      formControlName="content"
+      class="border-b border-gray-300 focus:outline-none"
+    ></textarea>
+  </div>
+
+  <button
+    class="w-fit self-center bg-green-200 border-green-400 border-2 py-2 px-4 rounded-md"
+    type="submit"
+    [class]="reviewForm.invalid ? 'cursor-not-allowed grayscale-75' : 'cursor-pointer'"
+    [disabled]="reviewForm.invalid"
+  >
+    Send
+  </button>
+</form>
+

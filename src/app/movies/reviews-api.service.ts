@@ -2,24 +2,20 @@ import { Injectable } from '@angular/core';
 import { LocalDbApiService } from '@core/local-db-api.service';
 import { Review } from '@/movies/types';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class ReviewsApiService {
-  constructor(public localDbApiService: LocalDbApiService) { }
+  constructor(
+    public localDbApiService: LocalDbApiService,
+  ) { }
 
-  get movieId() {
-    return this.localDbApiService.movieId;
-  }
-  set movieId(movieId: Maybe<string>) {
-    this.localDbApiService.movieId = movieId;
-  }
-
-  get reviews() {
-    return this.localDbApiService.reviews;
+  getReviews(movieId: number) {
+    return this.localDbApiService.getReviews(movieId);
   }
 
-  addReview(review: Review) {
-    this.localDbApiService.addReview(review);
+  addReview(review: Review, movieId: number) {
+    this.localDbApiService.addReview(review, movieId);
   }
 }

@@ -14,29 +14,6 @@ export class MoviesApiService {
   }
 
   private currentPage = signal(1);
-  private _movieId = signal<Maybe<string>>(undefined);
-
-  get movieId() {
-    return this._movieId.asReadonly()();
-  }
-  set movieId(value: Maybe<string>) {
-    this._movieId.set(value);
-  }
-
-  movie = resource({
-    request: () => ({id: this._movieId()}),
-    loader: async ({request}) => {
-      if (!request.id) {
-        return undefined;
-      }
-
-      return (await this.tmdbApi.movieInfo(
-        {
-          id: request.id,
-        }
-      ))
-    }
-  });
 
   moviesPopular = resource({
     request: () => ({page: this.currentPage()}),
@@ -44,11 +21,11 @@ export class MoviesApiService {
       {
         page: request.page,
       }
-    )).results,
+    )).results ?? [],
   });
 
   get page() {
-    return this.currentPage.asReadonly()();
+    return this.currentPage();
   }
 
   set page(page: number) {

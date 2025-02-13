@@ -1,9 +1,14 @@
 <div class="flex flex-col gap-y-2 mx-auto max-w-4xl p-4">
-  @if (moviesApiService.movie.value()) {
+  @if (movieDetailsService.movie.hasValue()) {
     <app-movie-details
-      [movie]="moviesApiService.movie.value()!"
+      [movie]="movieDetailsService.movie.value()!"
     />
   }
 
-  <app-review-list [reviews]="reviewsApiService.reviews!" />
+  <app-review-list [reviews]="reviews()" />
+
+  <app-add-review
+    class="mx-50"
+    (onSubmit)="onAddReview($event)"
+  />
 </div>

@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Review } from '@/movies/types';
 
 
@@ -6,9 +6,9 @@ import { Review } from '@/movies/types';
   providedIn: 'root'
 })
 export class LocalDbApiService {
-  moviesReviewsMap = signal(new Map<string, Review[]>([
+  moviesReviewsMap = signal(new Map<number, Review[]>([
     [
-      '1249289', [
+      1249289, [
         {
         id: 'review1',
         movieId: 1249289,
@@ -30,35 +30,23 @@ export class LocalDbApiService {
       ]
     ]
   ]));
-  _currentMovieId = signal<Maybe<string>>(undefined);
 
-  constructor() {
+  constructor() {}
 
+  getReviews(movieId: number) {
+    return this.moviesReviewsMap().get(movieId);
   }
 
-  get movieId() {
-    return this._currentMovieId();
-  }
-  set movieId(movieId: Maybe<string>) {
-    this._currentMovieId.set(movieId);
-  }
-
-  get reviews() {
-    return !!this._currentMovieId()
-      ? this.moviesReviewsMap().get(this._currentMovieId()!)
-      : undefined;
-  }
-
-  addReview(review: Review) {
-    if (!this._currentMovieId()) {
-      throw new Error('MovieId not set!');
+  addReview(review: Review, movieId: number) {
+    if (!movieId) {
+      throw new Error('MovieId is not valid!');
     }
     if (!review) {
       throw new Error('Review is not defined!');
     }
 
-    const movieId = this._currentMovieId()!;
-    let reviews = this.moviesReviewsMap().get(movieId) ?? [];
+    const reviews = this.getReviews(movieId) ?? [];
+    review.id = 'review' + reviews?.length + 1;
 
     if (reviews.find(item => item.id === review.id)) {
       throw new Error('Review already exists!');
