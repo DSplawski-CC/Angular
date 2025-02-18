@@ -7,6 +7,7 @@ import { ReviewsApiService } from '@/movies/reviews-api.service';
 import { AddReviewComponent } from '@/movies/add-review/add-review.component';
 import { Review, ReviewData } from '@/movies/types';
 import { MovieDetailsService } from '@/movies/movie-details.service';
+import { DecimalPipe } from '@angular/common';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { MovieDetailsService } from '@/movies/movie-details.service';
     ReviewListComponent,
     AddReviewComponent,
   ],
+  providers: [DecimalPipe]
 })
 export class MovieComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
@@ -48,7 +50,7 @@ export class MovieComponent implements OnInit {
   onAddReview(reviewData: ReviewData) {
     const review: Review = {
       ...reviewData,
-      movieId: Number(this.movieDetailsService.movieId),
+      movieId: this.movieDetailsService.movieId,
       createdAt: new Date(Date.now()).toISOString(),
       id: '',
     }

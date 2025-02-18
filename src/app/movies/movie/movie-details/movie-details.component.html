@@ -17,7 +17,7 @@
     <div class="flex justify-center items-center space-x-2">
       <app-star-icon [size]="20"/>
       <span class="text-xl font-semibold">
-          {{ movie.vote_average }}
+          {{ movie.vote_average | ratingFormat }}
         </span>
       <span>
           ({{ movie.vote_count }} votes)

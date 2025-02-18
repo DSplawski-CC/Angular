@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { MoviesApiService } from '@/movies/movies-api.service';
-import { DatePipe, DecimalPipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { RatingFormatPipe } from "@shared/pipes/rating-format.pipe";
 
 
 @Component({
   selector: 'app-movies-list',
-  imports: [DatePipe, DecimalPipe, RouterLink],
+  imports: [DatePipe, RouterLink, RatingFormatPipe],
   templateUrl: './movies-list.component.html',
 })
 export class MoviesListComponent {

@@ -22,7 +22,7 @@ export class AddReviewComponent {
     content: new FormControl('', { nonNullable: false, validators: [Validators.required, Validators.minLength(3), Validators.maxLength(1000)] }),
     author: new FormControl('', { nonNullable: false, validators: [Validators.required, Validators.minLength(3), Validators.maxLength(10) ]}),
     rating: new FormControl(null, { nonNullable: true, validators: [Validators.required, Validators.min(1), Validators.max(10)] }),
-  } satisfies DataForm<ReviewData>)
+  } satisfies DataForm<ReviewData>);
 
   onSubmit() {
     this.onSubmitEvent.emit(this.reviewForm.value as unknown as ReviewData);

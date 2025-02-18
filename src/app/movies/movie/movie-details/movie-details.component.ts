@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { StarIconComponent } from '@shared/components/star-icon/star-icon.component';
 import { DatePipe } from '@angular/common';
 import { MovieResponse } from 'moviedb-promise';
+import { RatingFormatPipe } from '@shared/pipes/rating-format.pipe';
 
 
 @Component({
@@ -9,6 +10,7 @@ import { MovieResponse } from 'moviedb-promise';
   imports: [
     StarIconComponent,
     DatePipe,
+    RatingFormatPipe,
   ],
   templateUrl: './movie-details.component.html',
   styleUrl: './movie-details.component.css',
