@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ReviewComponent } from '@/movies/review/review.component';
 import { Review } from '@/movies/types';
 
@@ -12,5 +12,5 @@ import { Review } from '@/movies/types';
   styles: ``
 })
 export class ReviewListComponent {
-  @Input() reviews!: Review[];
+  reviews = input<Review[]>([]);
 }

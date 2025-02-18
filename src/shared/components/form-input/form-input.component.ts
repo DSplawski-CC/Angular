@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -17,9 +17,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@a
   templateUrl: './form-input.component.html',
 })
 export class FormInputComponent implements ControlValueAccessor {
-  @Input() label: string = '';
-  @Input() type: InputTypes = 'text';
-  @Input() showError = true;
+  label = input('');
+  type = input<InputType>('text');
+  showError = input(true);
 
   value: any = '';
   disabled = false;

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,6 +6,5 @@ import { Component, Input } from '@angular/core';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {
-  @Input()
-  text: string = '';
+  text = input('');
 }

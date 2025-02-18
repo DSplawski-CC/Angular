@@ -1,4 +1,4 @@
-import { Directive, EventEmitter, HostListener, Output } from '@angular/core';
+import { Directive, HostListener, output } from '@angular/core';
 
 @Directive({
   selector: '[appHover]'
@@ -14,6 +14,5 @@ export class HoverDirective {
     this.hoverChange.emit(false);
   }
 
-  @Output()
-  hoverChange = new EventEmitter<boolean>();
+  hoverChange = output<boolean>();
 }

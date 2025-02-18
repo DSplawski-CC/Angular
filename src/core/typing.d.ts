@@ -1,6 +1,6 @@
 type Maybe<T> = NonNullable<T> | undefined;
 
-type InputTypes =
+type InputType =
   | 'button'
   | 'checkbox'
   | 'color'

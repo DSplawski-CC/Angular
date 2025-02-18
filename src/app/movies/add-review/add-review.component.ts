@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ReviewData } from '@/movies/types';
 import { FormInputComponent } from '@shared/components/form-input/form-input.component';
@@ -14,8 +14,7 @@ type DataForm<T extends Object> = {
   templateUrl: './add-review.component.html',
 })
 export class AddReviewComponent {
-
-  @Output('onSubmit') onSubmitEvent = new EventEmitter<ReviewData>();
+  submitForm = output<ReviewData>();
 
   reviewForm: FormGroup<DataForm<ReviewData>>
   constructor() {
@@ -29,6 +28,6 @@ export class AddReviewComponent {
   }
 
   onSubmit() {
-    this.onSubmitEvent.emit(this.reviewForm.value as unknown as ReviewData);
+    this.submitForm.emit(this.reviewForm.value as unknown as ReviewData);
   }
 }

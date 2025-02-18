@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { StarIconComponent } from '@shared/components/star-icon/star-icon.component';
 import { DatePipe } from '@angular/common';
 import { MovieResponse } from 'moviedb-promise';
@@ -16,5 +16,5 @@ import { RatingFormatPipe } from '@shared/pipes/rating-format.pipe';
   styleUrl: './movie-details.component.css',
 })
 export class MovieDetailsComponent {
-  @Input() movie!: MovieResponse;
+  movie = input.required<MovieResponse>();
 }
