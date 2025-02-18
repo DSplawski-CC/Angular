@@ -22,6 +22,7 @@ export class FormInputComponent implements ControlValueAccessor {
   @Input() showError = true;
 
   value: any = '';
+  disabled = false;
 
   onChange: any = (_: any) => {};
   onTouched: any = () => {};
@@ -37,6 +38,7 @@ export class FormInputComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
   }
 
   registerOnChange(fn: any) {
