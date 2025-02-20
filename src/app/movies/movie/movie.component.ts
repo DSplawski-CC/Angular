@@ -8,6 +8,7 @@ import { AddReviewComponent } from '@/movies/add-review/add-review.component';
 import { Review, ReviewData } from '@/movies/types';
 import { MovieDetailsService } from '@/movies/movie-details.service';
 import { DecimalPipe } from '@angular/common';
+import { ModalComponent } from "@shared/components/modal/modal.component";
 
 
 @Component({
@@ -17,6 +18,7 @@ import { DecimalPipe } from '@angular/common';
     MovieDetailsComponent,
     ReviewListComponent,
     AddReviewComponent,
+    ModalComponent,
   ],
   providers: [DecimalPipe]
 })

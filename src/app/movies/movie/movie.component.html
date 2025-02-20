@@ -7,8 +7,28 @@
 
   <app-review-list [reviews]="reviews()" />
 
-  <app-add-review
-    class="mx-50"
-    (submitForm)="onAddReview($event)"
-  />
+  <button
+    #addReviewBtn
+    class="self-center px-2 border-1 rounded-md bg-green-200 border-green-300 w-fit cursor-pointer p-1 hover:text-blue-500"
+  >
+    Add review
+  </button>
+
+  <app-modal [activator]="addReviewBtn">
+    <ng-container ngProjectAs="[modal-header]">
+      My Title
+    </ng-container>
+
+    <ng-container ngProjectAs="[modal-content]">
+      <app-add-review
+        class="mx-50"
+        (submitForm)="onAddReview($event)"
+      />
+    </ng-container>
+
+    <ng-container ngProjectAs="modal-footer">
+      My Actions
+    </ng-container>
+  </app-modal>
+
 </div>
