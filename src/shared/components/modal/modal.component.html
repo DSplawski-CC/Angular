@@ -1,0 +1,35 @@
+
+@if (show()) {
+  <div
+    class="flex flex-col w-200 max-h-120 border-2 rounded-2xl shadow-2xl bg-white border-transparent z-50"
+    appClickOutside
+    appBlockWheeling
+    [ignoreElements]="[activator()]"
+    (clickOutside)="closeModal()"
+    [ignoreWheeling]="show()"
+    >
+    <header class="flex-initial flex justify-between my-4 mx-4">
+      <ng-content select="[modal-header]">
+      </ng-content>
+
+      <button class="cursor-pointer p-1 hover:text-blue-500">
+        <b>Esc</b>
+      </button>
+    </header>
+
+    <hr>
+
+    <section class="flex-auto content-center my-4 mx-4">
+      <ng-content select="[modal-content]">
+        Content
+      </ng-content>
+    </section>
+
+    <footer class="flex flex-initial my-4 mx-4 justify-end">
+      @if (customActions()) {
+        <!-- Pass onBackdropClick (bound to 'this') in the context -->
+        <ng-container [ngTemplateOutlet]="customActions()!" [ngTemplateOutletContext]="{close: closeModal}"></ng-container>
+      }
+    </footer>
+  </div>
+}
