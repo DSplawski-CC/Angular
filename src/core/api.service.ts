@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
+import { inject, Injectable } from '@angular/core';
+import { API_KEY } from '@/app.config';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private apiKey = environment.tmdbApiKey;
+  private apiKey = inject(API_KEY);
 
-  constructor() { }
+  constructor() {}
 
   getApiKey() {
     return this.apiKey;
