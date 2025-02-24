@@ -63,6 +63,17 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "test": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test.ts"
+                }
+              ],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -83,6 +94,18 @@
           "builder": "@angular-devkit/build-angular:extract-i18n"
         },
         "test": {
+          "configurations": {
+            "test": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test.ts"
+                }
+              ],
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "test",
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "polyfills": [

@@ -7,11 +7,11 @@
     "start:dev": "ng serve --configuration development",
     "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test --configuration test"
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^19.1.7npm",
+    "@angular/animations": "^19.1.7",
     "@angular/common": "^19.1.7",
     "@angular/compiler": "^19.1.7",
     "@angular/core": "^19.1.7",
