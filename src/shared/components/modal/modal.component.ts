@@ -33,7 +33,7 @@ export class ModalComponent {
     effect(() => {
       const activator = this.activator();
       if (activator) {
-        activator.onclick = () => { console.log('activator click'); this.show.set(true) };
+        activator.onclick = () => this.show.set(true);
       }
     })
   }
@@ -41,7 +41,6 @@ export class ModalComponent {
   @HostListener('window:keydown.esc', ['$event'])
   closeModal() {
     if (this.show()) {
-      console.log('closeModal')
       this.show.set(false);
     }
   }
