@@ -1,17 +1,16 @@
-import { Injectable, resource, signal } from '@angular/core';
+import { inject, Injectable, resource, signal } from '@angular/core';
 import { ApiService } from '@core/api.service';
 import { MovieDb } from 'moviedb-promise';
+import { MOVIE_DB } from '@/app.config';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieDetailsService {
-  private tmdbApi: MovieDb;
+  private tmdbApi = inject(MOVIE_DB);
 
-  constructor(private apiService: ApiService) {
-    this.tmdbApi = new MovieDb(this.apiService.getApiKey());
-  }
+  constructor() {}
 
   private _movieId = signal<number>(NaN);
 

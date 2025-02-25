@@ -1,28 +1,38 @@
-import { Injectable, resource, signal } from '@angular/core';
-import { ApiService } from '@core/api.service';
-import { MovieDb } from 'moviedb-promise';
+import { computed, inject, Injectable, resource, signal } from '@angular/core';
+import { MOVIE_DB } from '@/app.config';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class MoviesApiService {
-  private tmdbApi: MovieDb;
+  private tmdbApi = inject(MOVIE_DB);
 
-  constructor(private apiService: ApiService) {
-    this.tmdbApi = new MovieDb(this.apiService.getApiKey());
-  }
+  constructor() {}
 
   private currentPage = signal(1);
 
-  moviesPopular = resource({
+  private moviesPopularResponse = resource({
     request: () => ({page: this.currentPage()}),
-    loader: async ({request}) => (await this.tmdbApi.moviePopular(
-      {
-        page: request.page,
+    loader: async ({request}) => {
+      try {
+        return await this.tmdbApi.moviePopular(
+          {
+            page: request.page,
+          }
+        )
+      } catch (error) {
+        console.error('Error fetching popular movies:', error);
+        throw error;
       }
-    )).results ?? [],
+    },
   });
+
+  totalPages = computed(() => this.moviesPopularResponse.value()?.total_pages ?? NaN);
+  hasPreviousPage = computed(() => this.currentPage() > 1);
+  hasNextPage = computed(() => this.totalPages() > this.currentPage());
+  moviesPopular = computed(() => this.moviesPopularResponse.value()?.results ?? []);
+  moviesPopularError = computed(() => (this.moviesPopularResponse.error() as Error));
 
   get page() {
     return this.currentPage();
@@ -33,10 +43,14 @@ export class MoviesApiService {
   }
 
   previousPage(): void {
-    this.currentPage.update(page => --page);
+    if (this.hasPreviousPage()) {
+      this.currentPage.update(page => --page);
+    }
   }
 
   nextPage(): void {
-    this.currentPage.update(page => ++page);
+    if (this.hasNextPage()) {
+      this.currentPage.update(page => ++page);
+    }
   }
 }
