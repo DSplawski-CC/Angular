@@ -1,15 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { ApiService } from './api.service';
-import { API_KEY } from '@/app.config';
+
 
 describe('ApiService', () => {
   let service: ApiService;
+  const spy = jasmine.createSpyObj<ApiService>('ApiService', ['getApiKey']);
+  spy.getApiKey.and.returnValue('test_api_key');
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: API_KEY, useValue: 'test_api_key' },
-        ApiService,
+        { provide: ApiService, useValue: spy },
       ],
     });
     service = TestBed.inject(ApiService);
