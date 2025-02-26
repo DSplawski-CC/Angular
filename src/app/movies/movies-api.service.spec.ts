@@ -19,41 +19,42 @@ describe('MoviesApiService', () => {
     overview: 'Overview 2',
   } as unknown as MovieResult;
 
-  beforeEach(fakeAsync(() => {
+  beforeEach( (done) => {
     const movieDb = {
       async moviePopular(params?: PopularMoviesRequest): Promise<PopularMoviesResponse> {
-        const page = params?.page ?? 1;
-        const totalPages = 2;
+          const page = params?.page ?? 1;
+          const totalPages = 2;
 
-        if (page > totalPages) {
-          return Promise.reject(new Error('Page out of bound'));
-        }
+          if (page > totalPages) {
+            return Promise.reject(new Error('Page out of bound'));
+          }
 
-        const response: PopularMoviesResponse = {
-          page: page,
-          total_pages: totalPages,
-          total_results: 2,
-          results: page === 1
-            ? [firstMovie]
-            : page === 2
-              ? [secondMovie]
-              : []
-          ,
-        }
+          const response: PopularMoviesResponse = {
+            page: page,
+            total_pages: totalPages,
+            total_results: 2,
+            results: page === 1
+              ? [firstMovie]
+              : page === 2
+                ? [secondMovie]
+                : []
+            ,
+          }
 
-        return Promise.resolve(response);
+          return Promise.resolve(response);
       }
     } satisfies Partial<MovieDb>;
 
     TestBed.configureTestingModule({
       providers: [
-        { provide: MOVIE_DB, useValue: movieDb },
+        {provide: MOVIE_DB, useValue: movieDb},
       ],
     });
     service = TestBed.inject(MoviesApiService);
+
     TestBed.flushEffects();
-    tick();
-  }));
+    done();
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -77,26 +78,30 @@ describe('MoviesApiService', () => {
     expect(service.page).toBe(1);
   });
 
-  it('#previousPage should be not available', () => {
+  it('#previousPage should be not available', fakeAsync(() => {
+    tick();
     expect(service.hasPreviousPage()).toBe(false);
     service.previousPage();
     expect(service.page).toBe(1);
-  });
+  }));
 
-  it('#nextPage should be not available', () => {
+  it('#nextPage should be not available', fakeAsync(() => {
+    tick();
     service.page = service.totalPages();
     expect(service.hasNextPage()).toBe(false);
     service.nextPage();
     expect(service.page).toBe(2);
-  });
+  }));
 
-  it('#totalPages should contain 2 total pages', () => {
+  it('#totalPages should contain 2 total pages', fakeAsync(() => {
+    tick();
     expect(service.totalPages()).toBe(2);
-  });
+  }));
 
-  it('#moviesPopular should return first Movie', () => {
+  it('#moviesPopular should return first Movie', fakeAsync(() => {
+    tick();
     expect(service.moviesPopular()).toEqual([firstMovie]);
-  });
+  }));
 
   it('#moviesPopular should return second Movie', fakeAsync(() => {
     service.nextPage();
@@ -108,6 +113,6 @@ describe('MoviesApiService', () => {
     service.page = 3;
     tick();
 
-    expect(service.moviesPopularError()).toEqual(new Error('Page out of bound'));
+    expect(service.moviesPopularError().message).toBe('Page out of bound');
   }));
 });
