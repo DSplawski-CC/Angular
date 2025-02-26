@@ -9,12 +9,12 @@ type ValueType = Parameters<DecimalPipe['transform']>[0];
   standalone: true,
 })
 export class RatingFormatPipe implements PipeTransform {
-  private readonly defaultFormat = '1.0-1';
+  private readonly defaultFormat = '1.1-1';
   private decimalPipe = inject(DecimalPipe);
 
   constructor() {}
 
-  transform(value: ValueType, format = this.defaultFormat): unknown {
+  transform(value: ValueType, format = this.defaultFormat) {
     return this.decimalPipe.transform(value, format);
   }
 }
