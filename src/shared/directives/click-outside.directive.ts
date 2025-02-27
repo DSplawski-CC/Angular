@@ -12,10 +12,10 @@ export class ClickOutsideDirective implements OnDestroy {
     private renderer: Renderer2,
     private el: ElementRef<HTMLElement>,
   ) {
-    this.unlisten = this.renderer.listen('window', 'click', (e: MouseEvent) => {
+    this.unlisten = this.renderer.listen('document', 'click', (e: MouseEvent) => {
       if (
         !this.el.nativeElement.contains(e.target as HTMLElement)
-        && !this.ignoreElements()?.some(el => el === e.target && e.target === window.document.querySelector(el))
+        && !this.ignoreElements()?.some(el => el === e.target || (typeof el === 'string' && e.target === document.querySelector(el)))
       ) {
         this.clickOutside.emit();
       } else {
