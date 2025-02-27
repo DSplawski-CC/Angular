@@ -1,4 +1,4 @@
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { MoviesApiService } from './movies-api.service';
 import { MOVIE_DB } from '@/app.config';
 import { MovieDb, MovieResult, PopularMoviesRequest, PopularMoviesResponse } from 'moviedb-promise';
@@ -19,7 +19,7 @@ describe('MoviesApiService', () => {
     overview: 'Overview 2',
   } as unknown as MovieResult;
 
-  beforeEach( (done) => {
+  beforeEach(waitForAsync(() => {
     const movieDb = {
       async moviePopular(params?: PopularMoviesRequest): Promise<PopularMoviesResponse> {
           const page = params?.page ?? 1;
@@ -51,10 +51,8 @@ describe('MoviesApiService', () => {
       ],
     });
     service = TestBed.inject(MoviesApiService);
-
     TestBed.flushEffects();
-    done();
-  });
+  }));
 
   it('should be created', () => {
     expect(service).toBeTruthy();
