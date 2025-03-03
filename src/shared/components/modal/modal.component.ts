@@ -33,13 +33,15 @@ export class ModalComponent {
     effect(() => {
       const activator = this.activator();
       if (activator) {
-        activator.onclick = () => this.show.set(true);
+        activator.onclick = () => {
+          this.show.set(true);
+        }
       }
     })
   }
 
-  @HostListener('window:keydown.esc', ['$event'])
-  closeModal() {
+  @HostListener('document:keydown.esc', ['$event'])
+  public closeModal() {
     if (this.show()) {
       this.show.set(false);
     }
