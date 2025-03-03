@@ -83,4 +83,10 @@ describe('ClickOutsideDirective', () => {
 
     expect(appliedDirective.clickOutside).not.toHaveEmitted();
   });
+
+  it('#ignoreAnotherDiv should not trigger #clickOutside', () => {
+    ignoreAnotherDiv.nativeElement.dispatchEvent(new Event('click', { bubbles: true, cancelable: true }));
+
+    expect(appliedDirective.clickOutsideEnabled).not.toHaveEmitted();
+  });
 });
