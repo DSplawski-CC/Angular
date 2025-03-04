@@ -3,7 +3,7 @@
     <button
       class="disabled:cursor-not-allowed disabled:grayscale-75 cursor-pointer font-bold border-2 rounded-md px-1 border-green-400 bg-green-200"
       [disabled]="!moviesApiService.hasPreviousPage()"
-      (click)="previousPage()"
+      (click)="moviesApiService.previousPage()"
     >
       Previous
     </button>
@@ -13,7 +13,7 @@
     <button
       class="cursor-pointer disabled:cursor-not-allowed disabled:grayscale-75 font-bold border-2 rounded-md px-1 border-green-400 bg-green-200"
       [disabled]="!moviesApiService.hasNextPage()"
-      (click)="nextPage()"
+      (click)="moviesApiService.nextPage()"
     >
       Next
     </button>
