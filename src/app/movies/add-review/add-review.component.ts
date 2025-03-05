@@ -2,6 +2,7 @@ import { Component, output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ReviewData } from '@/movies/types';
 import { FormInputComponent } from '@shared/components/form-input/form-input.component';
+import { CustomValidators } from '@narik/custom-validators';
 
 
 type DataForm<T extends Object> = {
@@ -23,11 +24,13 @@ export class AddReviewComponent {
       title: formBuilder.control('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }),
       content: formBuilder.control('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(1000)] }),
       author: formBuilder.control('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(10)] }),
-      rating: formBuilder.control(NaN, { validators: [Validators.required, Validators.min(1), Validators.max(10)] }),
+      rating: formBuilder.control(NaN, { validators: [Validators.required, CustomValidators.number, Validators.min(1), Validators.max(10)] }),
     });
   }
 
   onSubmit() {
-    this.submitForm.emit(this.reviewForm.value as unknown as ReviewData);
+    if (this.reviewForm.valid) {
+      this.submitForm.emit(this.reviewForm.value as unknown as ReviewData);
+    }
   }
 }

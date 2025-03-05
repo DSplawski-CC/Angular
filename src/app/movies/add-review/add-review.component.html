@@ -21,7 +21,6 @@
       label="name"
       type="text"
       formControlName="author"
-
       [showError]="reviewForm.controls.author.invalid && reviewForm.controls.author.touched"
     />
 
@@ -33,12 +32,13 @@
       [showError]="reviewForm.controls.title.invalid && reviewForm.controls.title.touched"
     />
 
-    <label for="content" class="text-right">description:</label>
-    <textarea
-      id="content"
+    <app-form-input
+      class="contents"
+      label="description"
+      type="textarea"
       formControlName="content"
-      class="border-b border-gray-300 focus:outline-none"
-    ></textarea>
+      [showError]="reviewForm.controls.content.invalid && reviewForm.controls.content.touched"
+    />
   </div>
 
   <button
