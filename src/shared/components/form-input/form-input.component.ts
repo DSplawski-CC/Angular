@@ -1,4 +1,4 @@
-import { Component, forwardRef, input, model } from '@angular/core';
+import { Component, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -18,11 +18,11 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@a
 })
 export class FormInputComponent implements ControlValueAccessor {
   label = input('');
-  type = input<InputType>('text');
+  type = input<InputType | 'textarea'>('text');
   showError = input(true);
 
   value = model('');
-  disabled = false;
+  disabled = signal(false);
 
   onChange: any = (_: any) => {};
   onTouched: any = () => {};
@@ -38,7 +38,7 @@ export class FormInputComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean) {
-    this.disabled = isDisabled;
+    this.disabled.set(isDisabled);
   }
 
   registerOnChange(fn: any) {
