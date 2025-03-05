@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { LocalDbApiService } from '@core/local-db-api.service';
 import { Review } from '@/movies/types';
 
@@ -7,9 +7,9 @@ import { Review } from '@/movies/types';
   providedIn: 'root'
 })
 export class ReviewsApiService {
-  constructor(
-    public localDbApiService: LocalDbApiService,
-  ) { }
+  private localDbApiService= inject(LocalDbApiService);
+
+  constructor() { }
 
   getReviews(movieId: number) {
     return this.localDbApiService.getReviews(movieId);
