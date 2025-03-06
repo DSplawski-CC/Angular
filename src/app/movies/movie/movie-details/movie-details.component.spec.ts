@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MovieDetailsComponent } from './movie-details.component';
+import { DecimalPipe } from '@angular/common';
 
 describe('MovieDetailsComponent', () => {
   let component: MovieDetailsComponent;
@@ -8,7 +9,7 @@ describe('MovieDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MovieDetailsComponent]
+      imports: [MovieDetailsComponent, DecimalPipe],
     })
     .compileComponents();
 
