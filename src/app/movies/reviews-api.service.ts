@@ -16,6 +16,6 @@ export class ReviewsApiService {
   }
 
   addReview(review: Review, movieId: number) {
-    this.localDbApiService.addReview(review, movieId);
+    return this.localDbApiService.addReview(review, movieId);
   }
 }

@@ -50,5 +50,7 @@ export class LocalDbApiService {
 
     reviews.push(review);
     this.moviesReviewsMap().set(movieId, reviews);
+
+    return review;
   }
 }
