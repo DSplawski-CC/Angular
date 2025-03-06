@@ -24,21 +24,21 @@ import { ModalComponent } from "@shared/components/modal/modal.component";
 })
 export class MovieComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
+  public movieDetailsService = inject(MovieDetailsService);
+  public reviewsApiService = inject(ReviewsApiService);
+  public router = inject(Router);
+  public route = inject(ActivatedRoute);
 
   reviews = computed(() => this.reviewsApiService.getReviews(this.movieDetailsService.movieId) ?? []);
 
-  constructor(
-    public movieDetailsService: MovieDetailsService,
-    public reviewsApiService: ReviewsApiService,
-    private router: Router,
-    private route: ActivatedRoute,
-  ) {}
+  constructor() {}
 
   ngOnInit() {
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(param => {
         const movieId = Number(param?.get('movieId'));
+        console.log('movieId', movieId);
 
         if (!movieId) {
           this.router.navigateByUrl('/page-not-found').then();
