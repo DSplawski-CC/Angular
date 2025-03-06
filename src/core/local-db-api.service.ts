@@ -48,10 +48,6 @@ export class LocalDbApiService {
     const reviews = this.getReviews(movieId) ?? [];
     review.id = 'review' + reviews?.length + 1;
 
-    if (reviews.find(item => item.id === review.id)) {
-      throw new Error('Review already exists!');
-    }
-
     reviews.push(review);
     this.moviesReviewsMap().set(movieId, reviews);
   }

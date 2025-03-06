@@ -23,7 +23,7 @@ describe('ReviewsApiService', () => {
     expect(service.getReviews(0)).toBeFalsy();
   });
 
-  it('should add review', () => {
+  it('should add review to existing list', () => {
     const review: Review = {
       author: 'test',
       content: 'test',
@@ -52,5 +52,20 @@ describe('ReviewsApiService', () => {
     expect(() => service.addReview(null as unknown as Review, 1249289)).toThrow();
     expect(() => service.addReview(review, null as unknown as number)).toThrow();
     expect(service.getReviews(1249289)).not.toContain(review);
+  });
+
+  it('should create reviews list for first added review', () => {
+    const review: Review = {
+      author: 'test',
+      content: 'test',
+      title: 'test',
+      rating: 5,
+      movieId: 1249289,
+      createdAt: new Date(Date.now()).toISOString(),
+      id: '',
+    };
+
+    service.addReview(review, 1);
+    expect(service.getReviews(1)).toContain(review);
   });
 });
