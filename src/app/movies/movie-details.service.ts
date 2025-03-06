@@ -2,6 +2,7 @@ import { inject, Injectable, resource, signal } from '@angular/core';
 import { ApiService } from '@core/api.service';
 import { MovieDb } from 'moviedb-promise';
 import { MOVIE_DB } from '@/app.config';
+import { isNumber } from 'lodash-es';
 
 
 @Injectable({
@@ -24,7 +25,7 @@ export class MovieDetailsService {
   movie = resource({
     request: () => ({id: this._movieId()}),
     loader: async ({request}) => {
-      if (!request.id) {
+      if (!isNumber(request.id) || request.id < 1) {
         return undefined;
       }
 

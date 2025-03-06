@@ -49,7 +49,6 @@ describe('ReviewsApiService', () => {
       id: '',
     };
 
-
     expect(() => service.addReview(null as unknown as Review, 1249289)).toThrow();
     expect(() => service.addReview(review, null as unknown as number)).toThrow();
     expect(service.getReviews(1249289)).not.toContain(review);
