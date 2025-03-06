@@ -1,12 +1,10 @@
 import { inject, Injectable, resource, signal } from '@angular/core';
-import { ApiService } from '@core/api.service';
-import { MovieDb } from 'moviedb-promise';
 import { MOVIE_DB } from '@/app.config';
 import { isNumber } from 'lodash-es';
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MovieDetailsService {
   private tmdbApi = inject(MOVIE_DB);
