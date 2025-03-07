@@ -6,7 +6,7 @@ import { Directive, effect, ElementRef, input, OnDestroy, output, Renderer2 } fr
   standalone: true,
 })
 export class ClickOutsideDirective implements OnDestroy {
-  unlisten: () => void = () => {};
+  private unlisten!: () => void;
 
   constructor(
     private renderer: Renderer2,
@@ -26,7 +26,7 @@ export class ClickOutsideDirective implements OnDestroy {
         },
         { capture: true });
       } else {
-        this.unlisten();
+        this.unlisten?.();
       }
     });
 

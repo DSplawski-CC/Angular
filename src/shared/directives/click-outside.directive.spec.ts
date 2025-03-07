@@ -1,13 +1,13 @@
 import { ClickOutsideDirective } from './click-outside.directive';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, DebugElement, signal } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, DebugElement, Renderer2, signal, ɵDirectiveDef } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { outputEventMatchers } from '@tests/matchers/eventEmiterMatcher';
 
 
 @Component({
   template: `
-    <div data-testid="blocking-div" [appClickOutside] [ignoreElements]="[ignoreDiv, '[data-testid=&quot;ignore-another-div&quot;']">
+    <div data-testid="blocking-div" [appClickOutside] [clickOutsideEnabled]="clickOutsideBlock()"  [ignoreElements]="[ignoreDiv, '[data-testid=&quot;ignore-another-div&quot;']">
       <div data-testid="child-blocking-div"></div>
     </div>
     <div #ignoreDiv data-testid="ignore-div"></div>
@@ -18,6 +18,7 @@ import { outputEventMatchers } from '@tests/matchers/eventEmiterMatcher';
 })
 class TestComponent {
   readonly ignore = signal(true);
+  readonly clickOutsideBlock = signal(true);
 }
 
 describe('ClickOutsideDirective', () => {
@@ -87,6 +88,22 @@ describe('ClickOutsideDirective', () => {
   it('#ignoreAnotherDiv should not trigger #clickOutside', () => {
     ignoreAnotherDiv.nativeElement.dispatchEvent(new Event('click', { bubbles: true, cancelable: true }));
 
-    expect(appliedDirective.clickOutsideEnabled).not.toHaveEmitted();
+    expect(appliedDirective.clickOutside).not.toHaveEmitted();
+  });
+
+  it('should stop listening on click event', () => {
+    fixture.componentInstance.clickOutsideBlock.set(false);
+    fixture.detectChanges();
+    notIgnoreDiv.nativeElement.dispatchEvent(new Event('click', { bubbles: true, cancelable: true }));
+
+    expect(appliedDirective.clickOutside).not.toHaveEmitted();
+  });
+
+  it('should stop listening on click event', () => {
+    fixture.componentInstance.clickOutsideBlock.set(false);
+    fixture.detectChanges();
+    notIgnoreDiv.nativeElement.dispatchEvent(new Event('click', { bubbles: true, cancelable: true }));
+
+    expect(appliedDirective.clickOutside).not.toHaveEmitted();
   });
 });
