@@ -3,14 +3,14 @@ import { MovieComponent } from './movie.component';
 import { MovieDb, MovieResponse } from 'moviedb-promise';
 import { MOVIE_DB } from '@/app.config';
 import { DecimalPipe } from '@angular/common';
-import { ActivatedRoute, provideRouter, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Params, provideRouter, Router } from '@angular/router';
 import { routes } from '@/app.routes';
 import { ReviewData } from '@/movies/types';
+import { Subject } from 'rxjs';
 
 
 describe('MovieComponent', () => {
   let component: MovieComponent;
-  let route: ActivatedRoute;
   let router: Router;
   let fixture: ComponentFixture<MovieComponent>;
   const movie: MovieResponse = {
@@ -22,6 +22,8 @@ describe('MovieComponent', () => {
     id: 1,
     overview: 'Overview 1',
   };
+
+  const params$ = new Subject<Params>();
 
   beforeEach(async () => {
     const movieDb = {
@@ -41,6 +43,10 @@ describe('MovieComponent', () => {
       imports: [MovieComponent, DecimalPipe],
       providers: [
         provideRouter(routes),
+        { provide: ActivatedRoute, useValue: {
+            params: params$,
+          }
+        },
         {provide: MOVIE_DB, useValue: movieDb},
       ],
     })
@@ -48,7 +54,6 @@ describe('MovieComponent', () => {
 
     fixture = TestBed.createComponent(MovieComponent);
     router = TestBed.inject(Router);
-    route = TestBed.inject(ActivatedRoute);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -61,7 +66,8 @@ describe('MovieComponent', () => {
     expect(component.reviews().length).toBe(0);
   });
 
-  it('should add review', async () => {
+  it('should add review', () => {
+    params$.next({ 'movieId': '1' });
     const reviewsCount = component.reviews().length;
     const review: ReviewData = {
       author: 'test',
@@ -70,12 +76,15 @@ describe('MovieComponent', () => {
       rating: 5,
     };
 
-
-    fixture.detectChanges();
-
-    expect(component.movieDetailsService.movieId).toEqual(1);
     component.onAddReview(review);
 
     expect(component.reviews().length).toBe(reviewsCount + 1);
+  });
+
+  it('should navigate to page-not-found', () => {
+    const spy = spyOn(router, 'navigateByUrl').and.callThrough();
+    params$.next({});
+
+    expect(spy).toHaveBeenCalledWith('/page-not-found');
   });
 });

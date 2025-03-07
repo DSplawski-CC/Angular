@@ -29,16 +29,15 @@ export class MovieComponent implements OnInit {
   public router = inject(Router);
   public route = inject(ActivatedRoute);
 
-  reviews = computed(() => this.reviewsApiService.getReviews(this.movieDetailsService.movieId) ?? []);
+  reviews = computed(() => this.reviewsApiService.getReviews(this.movieDetailsService.movieId));
 
   constructor() {}
 
   ngOnInit() {
-    this.route.paramMap
+    this.route.params
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(param => {
-        const movieId = Number(param?.get('movieId'));
-        console.log('movieId', movieId);
+        const movieId = Number(param?.['movieId']);
 
         if (!movieId) {
           this.router.navigateByUrl('/page-not-found').then();
