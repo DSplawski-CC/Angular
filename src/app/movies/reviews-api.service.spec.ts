@@ -16,11 +16,11 @@ describe('ReviewsApiService', () => {
   });
 
   it('should return reviews', () => {
-    expect(service.getReviews(1249289)).toBeTruthy();
+    expect(service.getReviews(1249289).length).toBeTruthy();
   });
 
   it('should return falsy', () => {
-    expect(service.getReviews(0)).toBeFalsy();
+    expect(service.getReviews(0)).toEqual([]);
   });
 
   it('should add review to existing list', () => {
