@@ -23,6 +23,7 @@ describe('FormInputComponent', () => {
     component = fixture.componentInstance;
 
 
+    fixture.detectChanges();
     inputElementDebug = fixture.debugElement.query(By.css('input'));
     inputElement = inputElementDebug.nativeElement;
 
@@ -65,7 +66,7 @@ describe('FormInputComponent', () => {
   });
 
   it('should update component value', () => {
-    const onChangeSpy = jasmine.createSpy('onChange', component.onChange);
+    const onChangeSpy = spyOn(component, 'onChange').and.callThrough();
     inputElement.value = '5';
     inputElementDebug.triggerEventHandler('input', { target: inputElement });
     fixture.detectChanges();
@@ -75,7 +76,7 @@ describe('FormInputComponent', () => {
   });
 
   it('should trigger input touched', () => {
-    const onTouchedSpy = jasmine.createSpy('onTouched', component.onTouched);
+    const onTouchedSpy = spyOn(component, 'onTouched').and.callThrough();
     inputElementDebug.triggerEventHandler('blur', { target: inputElement });
 
     expect(onTouchedSpy).toHaveBeenCalled();
