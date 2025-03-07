@@ -34,7 +34,11 @@ export class LocalDbApiService {
   constructor() {}
 
   getReviews(movieId: number) {
-    return this.moviesReviewsMap().get(movieId);
+    if (!this.moviesReviewsMap().has(movieId)) {
+      this.moviesReviewsMap().set(movieId, []);
+    }
+
+    return this.moviesReviewsMap().get(movieId)!;
   }
 
   addReview(review: Review, movieId: number) {
@@ -45,7 +49,7 @@ export class LocalDbApiService {
       throw new Error('Review is not defined!');
     }
 
-    const reviews = this.getReviews(movieId) ?? [];
+    const reviews = this.getReviews(movieId);
     review.id = 'review' + reviews?.length + 1;
 
     reviews.push(review);
