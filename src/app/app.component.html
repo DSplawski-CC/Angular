@@ -5,15 +5,11 @@
 
   <nav>
     <a
+      data-testid="movies-link"
       class="cursor-pointer font-bold text-blue-500"
       routerLink="/movies"
       routerLinkActive="underline font-extrabold"
-    >Movies</a> |
-    <a
-      class="cursor-pointer font-bold text-blue-500"
-      routerLink="/heroes-list"
-      routerLinkActive="underline font-extrabold"
-    >Heroes</a>
+    >Movies</a>
   </nav>
 
   <div
@@ -22,7 +18,7 @@
     aria-label="Divider"
   ></div>
 
-  <router-outlet />
+  <router-outlet data-testid="router-outlet" />
 </main>
 
 

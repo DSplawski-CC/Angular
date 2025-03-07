@@ -5,7 +5,7 @@ import { HeaderComponent } from '@shared/components/header/header.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, RouterLink, RouterLinkActive],
+  imports: [HeaderComponent, RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
