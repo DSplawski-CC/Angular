@@ -23,7 +23,7 @@ export class MovieDetailsService {
   movie = resource({
     request: () => ({id: this._movieId()}),
     loader: async ({request}) => {
-      if (!isNumber(request.id) || request.id < 1) {
+      if (!isNumber(request.id) || isNaN(request.id) || request.id < 1) {
         return undefined;
       }
 
