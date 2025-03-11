@@ -1,9 +1,9 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MovieComponent } from './movie.component';
 import { MovieDb, MovieResponse } from 'moviedb-promise';
 import { MOVIE_DB } from '@/app.config';
 import { DecimalPipe } from '@angular/common';
-import { ActivatedRoute, ParamMap, Params, provideRouter, Router } from '@angular/router';
+import { ActivatedRoute, Params, provideRouter, Router } from '@angular/router';
 import { routes } from '@/app.routes';
 import { ReviewData } from '@/movies/types';
 import { Subject } from 'rxjs';
@@ -63,12 +63,12 @@ describe('MovieComponent', () => {
   });
 
   it('should have initial empty reviews', () => {
-    expect(component.reviews().length).toBe(0);
+    expect(component.reviews.value().length).toBe(0);
   });
 
   it('should add review', () => {
     params$.next({ 'movieId': '1' });
-    const reviewsCount = component.reviews().length;
+    const reviewsCount = component.reviews.value().length;
     const review: ReviewData = {
       author: 'test',
       content: 'test',
@@ -78,7 +78,7 @@ describe('MovieComponent', () => {
 
     component.onAddReview(review);
 
-    expect(component.reviews().length).toBe(reviewsCount + 1);
+    expect(component.reviews.value().length).toBe(reviewsCount + 1);
   });
 
   it('should navigate to page-not-found', () => {
