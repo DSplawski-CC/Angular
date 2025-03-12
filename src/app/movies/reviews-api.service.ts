@@ -18,6 +18,6 @@ export class ReviewsApiService {
   }
 
   addReview(review: Review, movieId: number) {
-    return this.localDbApiService.addReview(review, movieId);
+    return this.httpClient.post<Review>(`/movies/${ movieId }/reviews`, review);
   }
 }

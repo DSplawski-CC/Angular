@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, inject, OnInit, resource } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, resource } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MovieDetailsComponent } from '@/movies/movie/movie-details/movie-details.component';
@@ -9,7 +9,7 @@ import { Review, ReviewData } from '@/movies/types';
 import { MovieDetailsService } from '@/movies/movie-details.service';
 import { DecimalPipe } from '@angular/common';
 import { ModalComponent } from "@shared/components/modal/modal.component";
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, take } from 'rxjs';
 
 
 @Component({
@@ -61,6 +61,8 @@ export class MovieComponent implements OnInit {
       id: '',
     }
 
-    this.reviewsApiService.addReview(review, this.movieDetailsService.movieId);
+    this.reviewsApiService.addReview(review, this.movieDetailsService.movieId)
+      .pipe(take(1))
+      .subscribe(() => this.reviews.reload());
   }
 }
