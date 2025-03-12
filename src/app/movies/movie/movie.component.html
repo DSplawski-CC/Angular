@@ -14,13 +14,14 @@
     Add review
   </button>
 
-  <app-modal [activator]="addReviewBtn">
+  <app-modal [activator]="addReviewBtn" [deactivator]="addReviewForm.submitForm">
     <ng-container ngProjectAs="[modal-header]">
-      My Title
+      Add review
     </ng-container>
 
     <ng-container ngProjectAs="[modal-content]">
       <app-add-review
+        #addReviewForm
         class="mx-50"
         (submitForm)="onAddReview($event)"
       />

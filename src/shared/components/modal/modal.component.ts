@@ -1,16 +1,17 @@
 import {
   Component,
   contentChild,
-  effect,
+  effect, EventEmitter,
   HostListener,
   input,
-  model,
+  model, OutputEmitterRef,
   TemplateRef,
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { ClickOutsideDirective } from '@shared/directives/click-outside.directive';
 import { BlockWheelingDirective } from '@shared/directives/block-wheeling.directive';
 
+type Activator = HTMLElement | OutputEmitterRef<unknown> | EventEmitter<unknown>;
 
 @Component({
   selector: 'app-modal',
@@ -27,23 +28,49 @@ import { BlockWheelingDirective } from '@shared/directives/block-wheeling.direct
 export class ModalComponent {
   customActions = contentChild<TemplateRef<any>>('customActions');
   show = model(false);
-  activator = input<HTMLElement>();
+  activator = input<Activator>();
+  deactivator = input<Activator>();
 
   constructor() {
     effect(() => {
-      const activator = this.activator();
-      if (activator) {
+      this.setActivatorHandle(this.activator(), this.closeModal);
+    });
+
+    effect(() => {
+      this.setActivatorHandle(this.deactivator(), this.openModal);
+    });
+  }
+
+  private setActivatorHandle(activator: Activator | undefined, action: Function) {
+    if (activator) {
+      if (activator instanceof HTMLElement) {
         activator.onclick = () => {
-          this.show.set(true);
+          action();
         }
+      } else if (activator instanceof OutputEmitterRef) {
+        const subscription = activator.subscribe(() => {
+          action();
+          subscription.unsubscribe();
+        });
+      } else if (activator instanceof EventEmitter) {
+        const subscription = activator.subscribe(() => {
+          action();
+          subscription.unsubscribe();
+        });
       }
-    })
+    }
   }
 
   @HostListener('document:keydown.esc', ['$event'])
   public closeModal() {
     if (this.show()) {
       this.show.set(false);
+    }
+  }
+
+  public openModal() {
+    if (!this.show()) {
+      this.show.set(true);
     }
   }
 }
