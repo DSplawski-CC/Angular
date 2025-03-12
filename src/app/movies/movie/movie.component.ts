@@ -63,6 +63,8 @@ export class MovieComponent implements OnInit {
 
     this.reviewsApiService.addReview(review, this.movieDetailsService.movieId)
       .pipe(take(1))
-      .subscribe(() => this.reviews.reload());
+      .subscribe({
+        next: () => { this.reviews.reload() },
+      });
   }
 }

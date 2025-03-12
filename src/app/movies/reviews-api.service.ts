@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import { LocalDbApiService } from '@core/local-db-api.service';
 import { Review } from '@/movies/types';
 import { HttpClient } from '@angular/common/http';
 
@@ -8,8 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ReviewsApiService {
-  private localDbApiService= inject(LocalDbApiService);
-  private httpClient= inject(HttpClient);
+  private httpClient = inject(HttpClient);
 
   constructor() { }
 
