@@ -10,7 +10,7 @@
       class="border-b border-gray-300 focus:outline-none"
       [attr.id]="label()"
       [value]="value()"
-      [disabled]="disabled"
+      [disabled]="disabled()"
       (input)="handleInput($event)"
       (blur)="onTouched()"
     ></textarea>
@@ -21,7 +21,7 @@
       [attr.id]="label()"
       [type]="type()"
       [value]="value()"
-      [disabled]="disabled"
+      [disabled]="disabled()"
       (input)="handleInput($event)"
       (blur)="onTouched()"
     />
