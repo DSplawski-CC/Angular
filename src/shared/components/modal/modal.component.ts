@@ -1,5 +1,5 @@
 import {
-  Component,
+  Component, computed,
   contentChild,
   effect, EventEmitter,
   HostListener,
@@ -11,7 +11,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import { ClickOutsideDirective } from '@shared/directives/click-outside.directive';
 import { BlockWheelingDirective } from '@shared/directives/block-wheeling.directive';
 
-type Activator = HTMLElement | OutputEmitterRef<unknown> | EventEmitter<unknown>;
+type Activator = Element | OutputEmitterRef<unknown> | EventEmitter<unknown>;
 
 @Component({
   selector: 'app-modal',
@@ -31,13 +31,20 @@ export class ModalComponent {
   activator = input<Activator>();
   deactivator = input<Activator>();
 
+  clickOutsideIgnore = computed(() => {
+    const activator = this.activator();
+    return activator instanceof Element
+      ? [activator]
+      : [];
+  })
+
   constructor() {
     effect(() => {
-      this.setActivatorHandle(this.activator(), this.closeModal);
+      this.setActivatorHandle(this.activator(), this.openModal.bind(this));
     });
 
     effect(() => {
-      this.setActivatorHandle(this.deactivator(), this.openModal);
+      this.setActivatorHandle(this.deactivator(), this.closeModal.bind(this));
     });
   }
 

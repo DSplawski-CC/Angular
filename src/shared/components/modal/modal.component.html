@@ -6,7 +6,7 @@
     appBlockWheeling
     [ignoreWheeling]="show()"
     [clickOutsideEnabled]="show()"
-    [ignoreElements]="[activator()]"
+    [ignoreElements]="clickOutsideIgnore()"
     (clickOutside)="closeModal()"
     >
     <header class="flex-initial flex justify-between my-4 mx-4">
