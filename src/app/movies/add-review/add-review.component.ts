@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { ReviewData } from '@/movies/types';
 import { FormInputComponent } from '@shared/components/form-input/form-input.component';
 import { CustomValidators } from '@narik/custom-validators';
+import { cloneDeep } from 'lodash-es';
 
 
 type DataForm<T extends Object> = {
@@ -24,13 +25,16 @@ export class AddReviewComponent {
       title: formBuilder.control('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }),
       content: formBuilder.control('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(1000)] }),
       author: formBuilder.control('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(10)] }),
+      email: formBuilder.control('', { validators: [Validators.required, Validators.email] }),
       rating: formBuilder.control(NaN, { validators: [Validators.required, CustomValidators.number, Validators.min(1), Validators.max(10)] }),
     });
   }
 
   onSubmit() {
     if (this.reviewForm.valid) {
-      this.submitForm.emit(this.reviewForm.value as unknown as ReviewData);
+      const reviewData = cloneDeep(this.reviewForm.value as unknown as ReviewData);
+      this.reviewForm.reset();
+      this.submitForm.emit(reviewData);
     }
   }
 }

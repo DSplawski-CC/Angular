@@ -26,6 +26,14 @@
 
     <app-form-input
       class="contents"
+      label="email"
+      type="email"
+      formControlName="email"
+      [showError]="reviewForm.controls.email.invalid && reviewForm.controls.email.touched"
+    />
+
+    <app-form-input
+      class="contents"
       label="title"
       type="text"
       formControlName="title"
