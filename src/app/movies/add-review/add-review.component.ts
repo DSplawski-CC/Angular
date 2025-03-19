@@ -34,7 +34,6 @@ export class AddReviewComponent {
   }
 
   onSubmit() {
-    console.log(this.reviewForm);
     if (this.reviewForm.valid) {
       const reviewData = {
         ...this.reviewForm.value,
