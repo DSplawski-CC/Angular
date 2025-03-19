@@ -1,13 +1,12 @@
 import { Component, output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ReviewData } from '@/movies/types';
 import { FormInputComponent } from '@shared/components/form-input/form-input.component';
 import { CustomValidators } from '@narik/custom-validators';
-import { cloneDeep } from 'lodash-es';
 
 
 type DataForm<T extends Object> = {
-  [Key in keyof T]: FormControl<T[Key]>
+  [Key in keyof T]: T[Key] extends Object ? { [SubKey in keyof T[Key]]: FormControl<T[Key][SubKey]> } : FormControl<T[Key]>
 }
 
 @Component({
@@ -18,21 +17,28 @@ type DataForm<T extends Object> = {
 export class AddReviewComponent {
   submitForm = output<ReviewData>();
 
-  reviewForm: FormGroup<DataForm<ReviewData>>
-  constructor() {
+  reviewForm = this.initForm();
+
+  initForm() {
     const formBuilder = new FormBuilder().nonNullable;
-    this.reviewForm = formBuilder.group({
+
+    return formBuilder.group({
+      author: formBuilder.group({
+        name: formBuilder.control('', { validators: [Validators.required, Validators.minLength(3)] }),
+        email: formBuilder.control('', { validators: [Validators.email] }),
+      }),
       title: formBuilder.control('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }),
       content: formBuilder.control('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(1000)] }),
-      author: formBuilder.control('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(10)] }),
-      email: formBuilder.control('', { validators: [Validators.required, Validators.email] }),
       rating: formBuilder.control(NaN, { validators: [Validators.required, CustomValidators.number, Validators.min(1), Validators.max(10)] }),
     });
   }
 
   onSubmit() {
+    console.log(this.reviewForm);
     if (this.reviewForm.valid) {
-      const reviewData = cloneDeep(this.reviewForm.value as unknown as ReviewData);
+      const reviewData = {
+        ...this.reviewForm.value,
+      } as unknown as ReviewData;
       this.reviewForm.reset();
       this.submitForm.emit(reviewData);
     }

@@ -19,9 +19,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@a
 export class FormInputComponent implements ControlValueAccessor {
   label = input('');
   type = input<InputType | 'textarea'>('text');
-  showError = input(true);
+  showError = input<boolean | undefined>(true);
 
-  value = model('');
+  value = model(this.type() === 'number' ? null : '');
   disabled = signal(false);
 
   onChange: any = (_: any) => {};
@@ -29,7 +29,14 @@ export class FormInputComponent implements ControlValueAccessor {
 
   handleInput(event: Event) {
     const input = event.target as HTMLInputElement;
-    this.value.set(input.value);
+    let newValue: any = input.value;
+
+    // Auto-convert if type is number
+    if (this.type() === 'number') {
+      newValue = input.value === '' ? null : Number(input.value);
+    }
+
+    this.value.set(newValue);
     this.onChange(this.value());
   }
 
