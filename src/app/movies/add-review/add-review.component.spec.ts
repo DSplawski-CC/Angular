@@ -52,7 +52,7 @@ describe('AddReviewComponent', () => {
   it('Form should be valid', () => {
     const controls = component.reviewForm.controls;
     controls.content.setValue('test');
-    controls.author.setValue('test');
+    controls.author.setValue({ name: 'test', email: 'test@test.com' });
     controls.title.setValue('test');
     controls.rating.setValue(5);
 
@@ -106,7 +106,7 @@ describe('AddReviewComponent', () => {
   it('should submit valid form', (done) => {
     const controls = component.reviewForm.controls;
     controls.content.setValue('test');
-    controls.author.setValue('test');
+    controls.author.setValue({ name: 'test', email: 'test@test.com' });
     controls.title.setValue('test');
     controls.rating.setValue(5);
 
@@ -114,7 +114,7 @@ describe('AddReviewComponent', () => {
 
     const subscription = fixture.componentInstance.submitForm.subscribe(review => {
       expect(review.content).toEqual('test');
-      expect(review.author).toEqual('test');
+      controls.author.setValue({ name: 'test', email: 'test@test.com' });
       expect(review.title).toEqual('test');
       expect(review.rating).toEqual(5);
       subscription.unsubscribe();

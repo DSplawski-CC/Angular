@@ -27,7 +27,7 @@ export class AddReviewComponent {
         name: formBuilder.control('', { validators: [Validators.required, Validators.minLength(3)] }),
         email: formBuilder.control('', { validators: [Validators.email] }),
       }),
-      title: formBuilder.control('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }),
+      title: formBuilder.control('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(30)] }),
       content: formBuilder.control('', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(1000)] }),
       rating: formBuilder.control(NaN, { validators: [Validators.required, CustomValidators.number, Validators.min(1), Validators.max(10)] }),
     });
