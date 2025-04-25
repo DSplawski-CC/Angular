@@ -1,13 +1,15 @@
 import { inject, Injectable, resource, signal } from '@angular/core';
-import { MOVIE_DB } from '@/app.config';
 import { isNumber } from 'lodash-es';
+import { HttpClient } from '@angular/common/http';
+import { MovieResponse } from 'moviedb-promise';
+import { firstValueFrom } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class MovieDetailsService {
-  private tmdbApi = inject(MOVIE_DB);
+  private httpClient = inject(HttpClient);
 
   constructor() {}
 
@@ -27,11 +29,9 @@ export class MovieDetailsService {
         return undefined;
       }
 
-      return (await this.tmdbApi.movieInfo(
-        {
-          id: request.id,
-        }
-      ))
+      const response = await firstValueFrom(this.httpClient.get<MovieResponse>(`/movies/${request.id}`));
+
+      return response
     }
   });
 }

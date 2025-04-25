@@ -1,12 +1,14 @@
 import { computed, inject, Injectable, resource, signal } from '@angular/core';
-import { MOVIE_DB } from '@/app.config';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+import { PopularMoviesResponse } from 'moviedb-promise';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class MoviesApiService {
-  private tmdbApi = inject(MOVIE_DB);
+  private httpClient = inject(HttpClient);
 
   constructor() {}
 
@@ -16,11 +18,7 @@ export class MoviesApiService {
     request: () => ({page: this.currentPage()}),
     loader: async ({request}) => {
       try {
-        return await this.tmdbApi.moviePopular(
-          {
-            page: request.page,
-          }
-        )
+        return await firstValueFrom(this.httpClient.get<PopularMoviesResponse>(`/movies/popular?page=${request.page}`))
       } catch (error) {
         console.error('Error fetching popular movies:', error);
         throw error;
