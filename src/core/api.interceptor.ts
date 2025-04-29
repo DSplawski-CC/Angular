@@ -21,7 +21,7 @@ export const apiInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, nex
     url: `${ environment.apiUrl }${ req.url }`,
     setHeaders: {
       'Content-Type': 'application/json',
-      'x-token': 'bearer token',
+      'Authorization': `bearer ${localStorage.getItem('access_token')}`,
     },
   });
 

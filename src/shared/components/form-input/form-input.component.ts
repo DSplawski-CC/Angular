@@ -20,6 +20,8 @@ export class FormInputComponent implements ControlValueAccessor {
   label = input('');
   type = input<InputType | 'textarea'>('text');
   showError = input<boolean | undefined>(true);
+  errorMessage = input<string | undefined>(undefined);
+  regexPattern = input<string>();
 
   value = model(this.type() === 'number' ? null : '');
   disabled = signal(false);

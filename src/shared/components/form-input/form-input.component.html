@@ -22,13 +22,14 @@
       [type]="type()"
       [value]="value()"
       [disabled]="disabled()"
+      [pattern]="regexPattern()"
       (input)="handleInput($event)"
       (blur)="onTouched()"
     />
   }
   @if (showError()) {
     <span data-testid="input-error" class="text-red-400 text-xs absolute top-7">
-      Field is invalid!
+      {{ errorMessage() ?? 'Field is invalid!' }}
     </span>
   }
 </div>

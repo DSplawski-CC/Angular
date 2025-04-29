@@ -16,24 +16,6 @@
       [showError]="reviewForm.controls.rating.invalid && reviewForm.controls.rating.touched"
     />
 
-    <ng-container formGroupName="author">
-      <app-form-input
-        class="contents"
-        label="author"
-        type="text"
-        formControlName="name"
-        [showError]="reviewForm.get('author.name')?.invalid && reviewForm.get('author.name')?.touched"
-      />
-
-      <app-form-input
-        class="contents"
-        label="email"
-        type="email"
-        formControlName="email"
-        [showError]="reviewForm.get('author.email')?.invalid && reviewForm.get('author.email')?.touched"
-      />
-    </ng-container>
-
     <app-form-input
       class="contents"
       label="title"
@@ -54,7 +36,6 @@
   <button
     class="w-fit self-center bg-green-200 border-green-400 border-2 py-2 px-4 rounded-md"
     type="submit"
-
   >
     Send
   </button>
