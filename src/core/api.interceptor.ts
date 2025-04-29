@@ -1,29 +1,33 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
-  HttpEvent, HttpInterceptorFn, HttpHandlerFn,
+  HttpRequest, HttpInterceptorFn, HttpHandlerFn, HttpStatusCode, HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
+import { tap } from 'rxjs';
+import { AuthService } from '@shared/services/auth.service';
+import { inject } from '@angular/core';
 
-
-@Injectable()
-export class ApiInterceptor implements HttpInterceptor {
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return apiInterceptor(request, next.handle);
-  }
-}
 
 export const apiInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
+  const authService = inject(AuthService);
+  console.log(req.url, req.headers.get('Authorization'));
   const clonedRequest = req.clone({
     url: `${ environment.apiUrl }${ req.url }`,
+
     setHeaders: {
       'Content-Type': 'application/json',
-      'Authorization': `bearer ${localStorage.getItem('access_token')}`,
+      'Authorization': `Bearer ${authService.getToken()}`,
     },
   });
 
-  return next(clonedRequest);
+  console.log(clonedRequest.url, clonedRequest.headers.get('Authorization'));
+
+  return next(clonedRequest)
+    .pipe(tap({
+      error: (err: HttpErrorResponse) => {
+        if (err.status === HttpStatusCode.Unauthorized) {
+          authService.logout();
+        }
+      }
+    }),
+    )
 };
