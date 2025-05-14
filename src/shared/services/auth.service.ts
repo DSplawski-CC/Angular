@@ -4,6 +4,7 @@ import { LoginData } from '@/movies/types';
 import { tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { Token } from '@/login/types';
+import { createSignal } from '@angular/core/primitives/signals';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ import { Token } from '@/login/types';
 })
 export class AuthService {
   private readonly tokenKey = 'accessToken' satisfies keyof Token;
-
+  private readonly token = signal
   public isLoggedIn = signal<boolean>(false);
 
   constructor(
@@ -20,9 +21,10 @@ export class AuthService {
   ) { }
 
   signIn(loginData: LoginData) {
-    return this.httpClient.post<Token>('/auth/login', loginData)
+    return this.httpClient.post<Token>('/auth/login', loginData, {
+      withCredentials: true,
+    })
       .pipe(tap(response => {
-        console.log('signIn', response);
         this.saveToken(response.accessToken);
         this.isLoggedIn.set(true);
       }),
@@ -30,9 +32,10 @@ export class AuthService {
   }
 
   refreshToken() {
-    return this.httpClient.post<Token>(`/auth/refresh`, null)
+    return this.httpClient.post<Token>(`/auth/refresh`, null, {
+      withCredentials: true,
+    })
       .pipe(tap(response => {
-        console.log('refresh', response);
         this.saveToken(response.accessToken);
         this.isLoggedIn.set(true);
       }),

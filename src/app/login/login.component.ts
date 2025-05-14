@@ -1,7 +1,6 @@
 import { Component, inject, output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginFormComponent } from '@/login/login-form/login-form.component';
-import { HttpClient } from '@angular/common/http';
 import { LoginData } from '@/movies/types';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
@@ -27,7 +26,6 @@ export class LoginComponent {
       .pipe(first())
       .subscribe({
         next: (r) => {
-          console.log('navigate to /movies', r)
           this.router.navigateByUrl('/movies')
         },
         error: (err) => {

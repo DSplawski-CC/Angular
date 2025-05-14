@@ -1,5 +1,5 @@
 import {
-  HttpRequest, HttpInterceptorFn, HttpHandlerFn, HttpStatusCode, HttpErrorResponse,
+  HttpRequest, HttpInterceptorFn, HttpHandlerFn, HttpStatusCode, HttpErrorResponse, HttpResponse,
 } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { catchError, first, mergeMap, tap, throwError } from 'rxjs';
@@ -11,7 +11,6 @@ export const apiInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, nex
   const authService = inject(AuthService);
   const clonedRequest = req.clone({
     url: `${ environment.apiUrl }${ req.url }`,
-
     setHeaders: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${authService.getToken()}`,
@@ -20,32 +19,34 @@ export const apiInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, nex
 
 
   return next(clonedRequest)
-    .pipe(catchError((err: HttpErrorResponse) => {
-      console.log('api error', err.url, err);
-      if (err.status === HttpStatusCode.Unauthorized) {
-        if (err.url?.includes('/auth/refresh')) {
-          authService.logout();
+    .pipe(
+      catchError((err: HttpErrorResponse) => {
+        if (err.status === HttpStatusCode.Unauthorized) {
+          if (err.url?.includes('/auth/refresh')) {
+            authService.logout();
+            throw new Error(err.message);
+          }
 
-          throw new Error(err.message);
+          return authService.refreshToken()
+            .pipe(
+              mergeMap(newToken => {
+                const retriedRequest = req.clone({
+                  url: `${ environment.apiUrl }${ req.url }`,
+                  setHeaders: {
+                    'Authorization': `Bearer ${ newToken.accessToken }`,
+                  },
+                });
+                return next(retriedRequest).pipe(
+                  catchError((refreshErr: HttpErrorResponse) => {
+                    throw new Error(err.message);
+                  })
+                );
+              }),
+            );
         }
 
-        return authService.refreshToken()
-          .pipe(
-            mergeMap(newToken => {
-              const retriedRequest = req.clone({
-                setHeaders: {
-                  'Authorization': `Bearer ${ newToken.accessToken }`,
-                },
-              });
-              return next(retriedRequest);
-            }),
-            catchError((refreshErr: HttpErrorResponse) => {
-              authService.logout();
-              return throwError((refreshErr: any) => new Error(refreshErr?.message));
-            })
-
-          );
+        authService.logout();
+        throw new Error(err.message);
       }
-    }),
-    )
+    ));
 };
