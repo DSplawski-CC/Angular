@@ -1,12 +1,18 @@
 import { Routes } from '@angular/router';
-import { authGuard } from '@core/auth.guard';
+import { authGuard, authGuardSkip } from '@core/auth.guard';
 
 
 export const routes: Routes = [
   {
+    loadComponent: () => import('app/homepage/homepage.component').then(component => component.HomepageComponent),
+    title: 'Home page',
+    path: '',
+  },
+  {
     loadComponent: () => import('app/login/login.component').then(component => component.LoginComponent),
     title: 'Sign in',
     path: 'sign-in',
+    canActivate: [authGuardSkip],
   },
   {
     loadComponent: () => import('app/register/register.component').then(component => component.RegisterComponent),

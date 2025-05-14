@@ -13,7 +13,7 @@ import { createSignal } from '@angular/core/primitives/signals';
 export class AuthService {
   private readonly tokenKey = 'accessToken' satisfies keyof Token;
   private readonly token = signal
-  public isLoggedIn = signal<boolean>(false);
+  public isLoggedIn = signal<boolean>(!!this.getToken());
 
   constructor(
     private readonly httpClient: HttpClient,
