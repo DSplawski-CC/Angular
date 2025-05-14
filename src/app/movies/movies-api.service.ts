@@ -2,6 +2,8 @@ import { computed, inject, Injectable, resource, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { PopularMoviesResponse } from 'moviedb-promise';
+import { registerResource, ResourceManagerService } from '@shared/services/resource-manager.service';
+import { AuthService } from '@shared/services/auth.service';
 
 
 @Injectable({
@@ -9,12 +11,14 @@ import { PopularMoviesResponse } from 'moviedb-promise';
 })
 export class MoviesApiService {
   private httpClient = inject(HttpClient);
+  private authService = inject(AuthService);
+  private resourceManagerService = inject(ResourceManagerService);
 
   constructor() {}
 
   private currentPage = signal(1);
 
-  private moviesPopularResponse = resource({
+  private moviesPopularResponse = registerResource({
     request: () => ({page: this.currentPage()}),
     loader: async ({request}) => {
       try {
