@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@narik/custom-validators": "^13.0.0",
+    "imagekitio-angular": "^5.1.0",
     "lodash-es": "^4.17.21",
     "moviedb-promise": "^4.0.7",
     "regex": "^6.0.1",
