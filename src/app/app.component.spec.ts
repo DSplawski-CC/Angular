@@ -5,7 +5,6 @@ import { routes } from '@/app.routes';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { MovieDb, MovieResult, PopularMoviesRequest, PopularMoviesResponse } from 'moviedb-promise';
-import { MOVIE_DB } from '@/app.config';
 import { MoviesListComponent } from '@/movies/movies-list/movies-list.component';
 import { MovieComponent } from '@/movies/movie/movie.component';
 
@@ -47,7 +46,6 @@ describe('AppComponent', () => {
       providers: [
         provideRouter(routes),
         Router, RouterLink, RouterOutlet,
-        { provide: MOVIE_DB, useValue: movieDb },
       ]
     }).compileComponents();
 
