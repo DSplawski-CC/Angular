@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ReviewsApiService } from './reviews-api.service';
 import { Review } from '@/movies/types';
+import { lastValueFrom } from 'rxjs';
 
 describe('ReviewsApiService', () => {
   let service: ReviewsApiService;
@@ -15,17 +16,17 @@ describe('ReviewsApiService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return reviews', () => {
-    expect(service.getReviews(1249289).length).toBeTruthy();
+  it('should return reviews', async () => {
+    expect((await lastValueFrom(service.getReviews(1249289))).length).toBeTruthy();
   });
 
-  it('should return falsy', () => {
-    expect(service.getReviews(0)).toEqual([]);
+  it('should return falsy', async () => {
+    expect(await lastValueFrom(service.getReviews(0))).toEqual([]);
   });
 
   it('should add review to existing list', () => {
     const review: Review = {
-      author: 'test',
+      author: { name: 'test', email: 'test@test.com' },
       content: 'test',
       title: 'test',
       rating: 5,
@@ -40,7 +41,7 @@ describe('ReviewsApiService', () => {
 
   it('should not add review', () => {
     const review: Review = {
-      author: 'test',
+      author: { name: 'test', email: 'test@test.com' },
       content: 'test',
       title: 'test',
       rating: 5,
@@ -56,7 +57,7 @@ describe('ReviewsApiService', () => {
 
   it('should create reviews list for first added review', () => {
     const review: Review = {
-      author: 'test',
+      author: { name: 'test', email: 'test@test.com' },
       content: 'test',
       title: 'test',
       rating: 5,

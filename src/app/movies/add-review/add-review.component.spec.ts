@@ -39,7 +39,6 @@ describe('AddReviewComponent', () => {
     const controls = component.reviewForm.controls;
     expect(component.reviewForm.valid).toBeFalse();
     expect(controls['rating'].hasError('number')).toBeTrue();
-    expect(controls['author'].hasError('required')).toBeTrue();
     expect(controls['title'].hasError('required')).toBeTrue();
     expect(controls['content'].hasError('required')).toBeTrue();
     fixture.detectChanges();
@@ -52,13 +51,11 @@ describe('AddReviewComponent', () => {
   it('Form should be valid', () => {
     const controls = component.reviewForm.controls;
     controls.content.setValue('test');
-    controls.author.setValue({ name: 'test', email: 'test@test.com' });
     controls.title.setValue('test');
     controls.rating.setValue(5);
 
     expect(component.reviewForm.invalid).toBeFalse();
     expect(controls['rating'].hasError('number')).toBeFalse();
-    expect(controls['author'].hasError('required')).toBeFalse();
     expect(controls['title'].hasError('required')).toBeFalse();
     expect(controls['content'].hasError('required')).toBeFalse();
 
@@ -76,8 +73,6 @@ describe('AddReviewComponent', () => {
     expect(component.reviewForm.controls.rating.invalid).toBeTrue();
     expect(ratingInput.componentInstance.showError()).toBeTrue();
 
-    expect(component.reviewForm.controls.author.touched).toBeTrue();
-    expect(component.reviewForm.controls.author.invalid).toBeTrue();
     expect(authorInput.componentInstance.showError()).toBeTrue();
 
     expect(component.reviewForm.controls.title.touched).toBeTrue();
@@ -106,7 +101,6 @@ describe('AddReviewComponent', () => {
   it('should submit valid form', (done) => {
     const controls = component.reviewForm.controls;
     controls.content.setValue('test');
-    controls.author.setValue({ name: 'test', email: 'test@test.com' });
     controls.title.setValue('test');
     controls.rating.setValue(5);
 
@@ -114,7 +108,6 @@ describe('AddReviewComponent', () => {
 
     const subscription = fixture.componentInstance.submitForm.subscribe(review => {
       expect(review.content).toEqual('test');
-      controls.author.setValue({ name: 'test', email: 'test@test.com' });
       expect(review.title).toEqual('test');
       expect(review.rating).toEqual(5);
       subscription.unsubscribe();

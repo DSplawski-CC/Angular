@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MovieComponent } from './movie.component';
 import { MovieDb, MovieResponse } from 'moviedb-promise';
-import { MOVIE_DB } from '@/app.config';
 import { DecimalPipe } from '@angular/common';
 import { ActivatedRoute, Params, provideRouter, Router } from '@angular/router';
 import { routes } from '@/app.routes';
@@ -47,7 +46,6 @@ describe('MovieComponent', () => {
             params: params$,
           }
         },
-        {provide: MOVIE_DB, useValue: movieDb},
       ],
     })
     .compileComponents();
@@ -70,7 +68,7 @@ describe('MovieComponent', () => {
     params$.next({ 'movieId': '1' });
     const reviewsCount = component.reviews.value().length;
     const review: ReviewData = {
-      author: 'test',
+      author: { name: 'test', email: 'test@test.com' },
       content: 'test',
       title: 'test',
       rating: 5,

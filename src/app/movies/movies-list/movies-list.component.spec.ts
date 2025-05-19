@@ -1,9 +1,6 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MoviesListComponent } from './movies-list.component';
-import { MovieDb, MovieResponse, MovieResult, PopularMoviesRequest, PopularMoviesResponse } from 'moviedb-promise';
-import { MOVIE_DB } from '@/app.config';
-import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { MovieDb, MovieResult, PopularMoviesRequest, PopularMoviesResponse } from 'moviedb-promise';
 
 
 describe('MoviesListComponent', () => {
@@ -50,9 +47,6 @@ describe('MoviesListComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [MoviesListComponent],
-      providers: [
-        {provide: MOVIE_DB, useValue: movieDb},
-      ]
     })
     .compileComponents();
 

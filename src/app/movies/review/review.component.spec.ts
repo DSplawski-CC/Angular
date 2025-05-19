@@ -7,7 +7,7 @@ describe('ReviewComponent', () => {
   let component: ReviewComponent;
   let fixture: ComponentFixture<ReviewComponent>;
   const review: Review = {
-    author: 'test',
+    author: { name: 'test', email: 'test@test.com' },
     content: 'test',
     rating: 5,
     title: 'test',

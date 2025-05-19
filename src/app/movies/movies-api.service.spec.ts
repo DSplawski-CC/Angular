@@ -1,6 +1,5 @@
 import { fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { MoviesApiService } from './movies-api.service';
-import { MOVIE_DB } from '@/app.config';
 import { MovieDb, MovieResult, PopularMoviesRequest, PopularMoviesResponse } from 'moviedb-promise';
 
 
@@ -45,11 +44,7 @@ describe('MoviesApiService', () => {
       }
     } satisfies Partial<MovieDb>;
 
-    TestBed.configureTestingModule({
-      providers: [
-        {provide: MOVIE_DB, useValue: movieDb},
-      ],
-    });
+    TestBed.configureTestingModule({});
     service = TestBed.inject(MoviesApiService);
     TestBed.flushEffects();
   }));
