@@ -10,6 +10,7 @@ import { MovieDetailsService } from '@/movies/movie-details.service';
 import { DecimalPipe } from '@angular/common';
 import { ModalComponent } from "@shared/components/modal/modal.component";
 import { firstValueFrom, take } from 'rxjs';
+import { MovieGalleryComponent } from '@/movies/movie-gallery/movie-gallery.component';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { firstValueFrom, take } from 'rxjs';
     ReviewListComponent,
     AddReviewComponent,
     ModalComponent,
+    MovieGalleryComponent,
   ],
   providers: [DecimalPipe]
 })

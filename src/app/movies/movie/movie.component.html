@@ -3,7 +3,10 @@
     <app-movie-details
       [movie]="movieDetailsService.movie.value()!"
     />
+
+    <app-movie-gallery [movieId]="movieDetailsService.movie.value()?.id" />
   }
+
 
   <app-review-list [reviews]="reviews.value()" />
 

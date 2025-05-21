@@ -1,23 +1,13 @@
-import { effect, inject, Injectable, resource, ResourceOptions, ResourceRef, signal } from '@angular/core';
+import { effect, inject, Injectable, Resource, resource, ResourceOptions, signal } from '@angular/core';
 import { AuthService } from '@shared/services/auth.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  ReloadableResource,
+  ReloadableResourceOptions,
+} from '@shared/services/register-resource';
 
-
-type ReloadableResourceOptions = {
-  reload: () => void;
-  name?: string;
-  route?: true | string;
-  condition?: () => boolean;
-};
-
-type ReloadableResource = {
-  reload: () => void;
-  name?: string;
-  route?: string;
-  condition?: () => boolean;
-};
 
 @Injectable({
   providedIn: 'root'
@@ -77,19 +67,4 @@ export class ResourceManagerService {
       }
     });
   }
-}
-
-export function registerResource<T, R>(resourceOptions: ResourceOptions<T, R>, reloadableResourceOptions: Partial<ReloadableResourceOptions> = {}) {
-  const resourceManager = inject(ResourceManagerService);
-  const reactiveResource = resource(resourceOptions);
-
-
-  resourceManager.registerResource({
-    ...reloadableResourceOptions,
-    reload: () => {
-      reactiveResource.reload();
-    }
-  });
-
-  return reactiveResource;
 }

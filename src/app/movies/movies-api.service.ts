@@ -1,9 +1,8 @@
-import { computed, inject, Injectable, resource, signal } from '@angular/core';
+import { computed, inject, Injectable, resource, ResourceRef, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { PopularMoviesResponse } from 'moviedb-promise';
-import { registerResource, ResourceManagerService } from '@shared/services/resource-manager.service';
-import { AuthService } from '@shared/services/auth.service';
+import { registerResource } from '@shared/services/register-resource';
 
 
 @Injectable({
@@ -11,8 +10,6 @@ import { AuthService } from '@shared/services/auth.service';
 })
 export class MoviesApiService {
   private httpClient = inject(HttpClient);
-  private authService = inject(AuthService);
-  private resourceManagerService = inject(ResourceManagerService);
 
   constructor() {}
 
