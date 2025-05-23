@@ -9,14 +9,20 @@ import { inject } from '@angular/core';
 
 export const apiInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const authService = inject(AuthService);
+
+  const hasEnctypeHeader = req.headers.has('Enctype');
+  let headers = req.headers.delete('Enctype');
+
+  if (!hasEnctypeHeader) {
+    headers = headers.append('Content-Type', 'application/json');
+  }
+
+  headers = headers.append('Authorization', `Bearer ${authService.getToken()}`);
+
   const clonedRequest = req.clone({
     url: `${ environment.apiUrl }${ req.url }`,
-    setHeaders: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${authService.getToken()}`,
-    },
+    headers,
   });
-
 
   return next(clonedRequest)
     .pipe(
