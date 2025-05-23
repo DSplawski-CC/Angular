@@ -4,15 +4,20 @@
   <gallery [items]="movieGallery.value()" />
 
   <ik-upload
-    [authenticator]="authenticator"
+    #uploadComponent
+    [authenticator]="authenticator.bind(this)"
     [folder]="movieId()!.toString()"
     [buttonRef]="imageUploadBtn"
+    [onUploadStart]="onImageUpload.bind(this)"
   />
 
-  <button
-    #imageUploadBtn
-    class="bg-green-500 text-white px-4 py-2 rounded mt-4 cursor-pointer hover:text-blue-500"
+  <div loader [isLoading]="isUploading()"
   >
-    Upload
-  </button>
+    <button
+      #imageUploadBtn
+      class="bg-green-500 text-white px-4 py-2 rounded mt-4 cursor-pointer hover:text-blue-500"
+    >
+      Upload
+    </button>
+  </div>
 </div>
